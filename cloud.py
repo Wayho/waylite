@@ -56,6 +56,11 @@ def Setup(**params):
 	OutputShell(str_setup)
 	return True
 
+@engine.define( 'ls' )
+def ls_cmd(**params):
+	OutputShell('ls -l')
+	return True
+
 
 #半小时运行一次
 # 15 5/15 9-23 * * ?
