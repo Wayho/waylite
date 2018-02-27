@@ -53,6 +53,7 @@ def OutputShell( str_cmd ):
 # 15 5/15 9-23 * * ?
 @engine.define( 'setup' )
 def Setup(**params):
+	print str_setup
 	OutputShell(str_setup)
 	return True
 
