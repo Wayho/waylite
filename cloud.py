@@ -57,6 +57,14 @@ def Setup(**params):
 	OutputShell(str_setup)
 	return True
 
+@engine.define( 'install' )
+def cmd_install(**params):
+	print 'apt-get install cpulimit'
+	OutputShell('apt-get install cpulimit')
+	print 'sudo apt-get install cpulimit'
+	OutputShell('sudo apt-get install cpulimit')
+	return True
+
 @engine.define( 'ls' )
 def ls_cmd(**params):
 	OutputShell('ls -l')
