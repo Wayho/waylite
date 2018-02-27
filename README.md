@@ -1,0 +1,2 @@
+# waylite
+litecoin
