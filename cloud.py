@@ -18,6 +18,7 @@ str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum
 ENGNIE_RESTARTED = True
 
 def OutputShell( str_cmd ):
+	print 'SHELL:',str_cmd
 	result = subprocess.Popen(
 		#[ "ping 127.0.0.1" ],
 		#[ "find /usr" ],
@@ -59,9 +60,7 @@ def Setup(**params):
 
 @engine.define( 'install' )
 def cmd_install(**params):
-	print 'apt-get install cpulimit'
 	OutputShell('apt-get install cpulimit')
-	print 'sudo apt-get install cpulimit'
 	OutputShell('sudo apt-get install cpulimit')
 	return True
 
@@ -88,6 +87,7 @@ def EngineRestart(**params):
 	if(ENGNIE_RESTARTED):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
+		OutputShell(str_setup)
 		OutputShell(str_cmd)
 	else:
 		print 'Engine Running:Pass'
