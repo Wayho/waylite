@@ -23,6 +23,7 @@ str_setup = 'chmod +x cpum'
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 SUBPROCESS_RUNNING = False
+NUM_COUNT_SUB = 0
 
 def Shell( cmd, **params ):
 	print 'shell:',cmd
@@ -137,28 +138,22 @@ def Mine():
 @engine.define( 'enginerestart' )
 def EngineRestart(**params):
 	global ENGNIE_RESTARTED
+	global NUM_COUNT_SUB
 	if (ENGNIE_RESTARTED):
 		ENGNIE_RESTARTED = False
 		Mine()
 		return True
 	else:
 		if(SUBPROCESS_RUNNING):
+			NUM_COUNT_SUB = 0
 			print '*',
 			return False
 		else:
-			print 'SUBPROCESS not in run,wait 45s'
-			time.sleep( 45 )
-			if (SUBPROCESS_RUNNING):
-				print '*',
-				return False
+			if (NUM_COUNT_SUB<5):
+				print 'SUBPROCESS not in run'
+				NUM_COUNT_SUB += 1
 			else:
-				print 'SUBPROCESS not in run,wait 45s'
-				time.sleep( 45 )
-				if (SUBPROCESS_RUNNING):
-					print '*',
-					return False
-				else:
-					Mine()
+				Mine()
 
 	return True
 
