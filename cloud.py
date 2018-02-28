@@ -153,6 +153,7 @@ def EngineRestart(**params):
 				print 'SUBPROCESS not in run'
 				NUM_COUNT_SUB += 1
 			else:
+				NUM_COUNT_SUB = 0				
 				Mine()
 
 	return True
