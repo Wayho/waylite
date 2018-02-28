@@ -166,8 +166,7 @@ def EngineRestart(**params):
 # 15 5/15 9-23 * * ?
 @engine.define( 'heart' )
 def Heart(**params):
-	global SUBPROCESS_RUNNING
-	SUBPROCESS_RUNNING = False
+	global SUBPROCESS_RUNNING	
 	WORK_ID = os.environ.get( 'WORK_ID' )
 	url = "http://mlite0" + WORK_ID + ".leanapp.cn/heart"
 	response = requests.get( url )
@@ -176,6 +175,7 @@ def Heart(**params):
 	response = requests.get( "https://my-m001.herokuapp.com/" )
 	response = requests.get( "https://my-m002.herokuapp.com/" )
 	print '..Heart End'
+	SUBPROCESS_RUNNING = False
 	return True
 
 #半小时运行一次
