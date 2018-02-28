@@ -21,11 +21,35 @@ ENGNIE_RESTARTED = True
 
 @engine.define( 'cpuinfo' )
 def cpu_info():
-	print 'cpu_count',psutil.cpu_count()
-	print 'cpu_freq', psutil.cpu_freq()
-	print 'cpu_stats', psutil.cpu_stats()
-	print 'cpu_percent', psutil.cpu_percent()
-	print 'cpu_times', psutil.cpu_times()
+	print 'psutil.pids()',psutil.pids()
+	print 'psutil.cpu_count()',psutil.cpu_count()
+	try:
+		print 'psutil.cpu_count(logical=False)', psutil.cpu_count(logical=False)
+	except:
+		pass
+	try:
+		print 'psutil.cpu_stats()', psutil.cpu_stats()
+	except:
+		pass
+	try:
+		print 'psutil.cpu_freq()', psutil.cpu_freq()
+	except:
+		pass
+	try:
+		print 'psutil.cpu_percent()', psutil.cpu_percent()
+	except:
+		pass
+	try:
+		print 'psutil.cpu_times(percpu=True)', psutil.cpu_times(percpu=True)
+	except:
+		pass
+	try:
+		print 'psutil.cpu_times().user', psutil.cpu_times().user
+	except:
+		pass
+
+
+
 
 @engine.define( 'shell' )
 # 调试 {'cmd':'ls -l' }
