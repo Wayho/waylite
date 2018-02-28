@@ -163,8 +163,9 @@ def Heart(**params):
 	global SUBPROCESS_RUNNING
 	SUBPROCESS_RUNNING = False
 	WORK_ID = os.environ.get( 'WORK_ID' )
-	response = requests.get( "http://mlite0" + WORK_ID + ".leanapp.cn/heart" )
-	print '..Heart End'
+	url = "http://mlite0" + WORK_ID + ".leanapp.cn/heart"
+	response = requests.get( url )
+	print url,'..Heart End'
 	return True
 
 #半小时运行一次
@@ -202,6 +203,9 @@ def OutputShell( cmd, **params ):
 			else:
 				SUBPROCESS_RUNNING = True
 				print readbuf_msg,
+				if (n % 64 == 0):
+					print psutil.cpu_times_percent()
+				n += 1
 
 		if result.stderr in rfds:
 			readbuf_errmsg = result.stderr.readline()
@@ -209,10 +213,6 @@ def OutputShell( cmd, **params ):
 				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
 			else:
 				print readbuf_errmsg,
-		if(n%64==0):
-			print psutil.cpu_times_percent()
-		n += 1
-
 	result.wait() # 等待字进程结束( 等待shell命令结束 )
 	print result.returncode
 	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
