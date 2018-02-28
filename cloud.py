@@ -144,7 +144,7 @@ def EngineRestart(**params):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
 		OutputShell(str_setup)
-		time.sleep(2)
+		time.sleep(20)
 		WORK_ID = os.environ.get( 'WORK_ID' )
 		str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
 		OutputShell(str_cmd)
