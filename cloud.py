@@ -134,6 +134,7 @@ def cmd_cpulimit(**params):
 	OutputShell('cpulimit -l 40')
 	return True
 
+
 #半小时运行一次
 # 15 5/15 9-23 * * ?
 @engine.define( 'enginerestart' )
@@ -144,13 +145,13 @@ def EngineRestart(**params):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
 		OutputShell(str_setup)
-		time.sleep(20)
+		time.sleep(2)
 		WORK_ID = os.environ.get( 'WORK_ID' )
 		str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
 		OutputShell(str_cmd)
 	else:
 		pass
-		#print 'Engine Running:Pass'
+		print 'Engine Running:Pass'
 	return True
 
 #半小时运行一次
@@ -172,6 +173,3 @@ def Heart_herokuapp(**params):
 	print '..Heart End'
 	return True
 
-######################################
-EngineRestart()
-######################################

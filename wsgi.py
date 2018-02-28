@@ -4,11 +4,11 @@ from gevent import monkey
 monkey.patch_all()
 
 import os
-
+import time
 import leancloud
 
 from app import app
-from cloud import engine
+from cloud import engine, EngineRestart
 
 APP_ID = os.environ['LEANCLOUD_APP_ID']
 APP_KEY = os.environ['LEANCLOUD_APP_KEY']
@@ -24,6 +24,11 @@ leancloud.use_master_key(False)
 app = engine.wrap(app)
 application = app
 
+######################################
+print 'time.sleep(15)\tEngineRestart()'
+time.sleep(15)
+EngineRestart()
+######################################
 
 if __name__ == '__main__':
     # 只在本地开发环境执行的代码
