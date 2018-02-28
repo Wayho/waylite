@@ -123,7 +123,7 @@ def cmd_cpulimit(**params):
 def Mine():
 	#str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
 	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-	str_cmd = 'PATH="$PATH:/media/azhu/sda6/LeanCloud/Wayho_Lean/mlite01" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
+	#str_cmd = 'PATH="$PATH:/media/azhu/sda6/LeanCloud/Wayho_Lean/mlite01" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
 
 	print 'Mine:Once'
 	OutputShell(str_setup)
