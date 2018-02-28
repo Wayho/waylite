@@ -6,6 +6,7 @@ from leancloud import Engine
 from leancloud import LeanEngineError
 
 import requests
+import time
 
 import psutil
 
@@ -23,6 +24,7 @@ ENGNIE_RESTARTED = True
 def cpu_info():
 	print 'psutil.pids()',psutil.pids()
 	print 'psutil.cpu_count()',psutil.cpu_count()
+
 	try:
 		print 'psutil.cpu_count(logical=False)', psutil.cpu_count(logical=False)
 	except:
@@ -37,6 +39,14 @@ def cpu_info():
 		pass
 	try:
 		print 'psutil.cpu_percent()', psutil.cpu_percent()
+	except:
+		pass
+	try:
+		print 'psutil.cpu_times_percent()', psutil.cpu_times_percent()
+	except:
+		pass
+	try:
+		print 'psutil.cpu_times()', psutil.cpu_times()
 	except:
 		pass
 	try:
@@ -64,6 +74,7 @@ def OutputShell( cmd, **params ):
 		stderr=subprocess.PIPE
 	)
 	# read date from pipe
+	n=0
 	select_rfds = [ result.stdout, result.stderr ]
 	while len( select_rfds ) > 0:
 		(rfds, wfds, efds) = select.select( select_rfds, [ ], [ ] ) #select函数阻塞进程，直到select_rfds中的套接字被触发
@@ -80,6 +91,9 @@ def OutputShell( cmd, **params ):
 				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
 			else:
 				print readbuf_errmsg,
+		if(n%8==0):
+			print psutil.cpu_times_percent()
+		n += 1
 
 	result.wait() # 等待字进程结束( 等待shell命令结束 )
 	print result.returncode
@@ -124,6 +138,7 @@ def EngineRestart(**params):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
 		OutputShell(str_setup)
+		time.sleep(2)
 		OutputShell(str_cmd)
 	else:
 		print 'Engine Running:Pass'
