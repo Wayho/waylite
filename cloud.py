@@ -152,7 +152,13 @@ def EngineRestart(**params):
 				print '*',
 				return False
 			else:
-				Mine()
+				print 'SUBPROCESS not in run,wait 45s'
+				time.sleep( 45 )
+				if (SUBPROCESS_RUNNING):
+					print '*',
+					return False
+				else:
+					Mine()
 
 	return True
 
