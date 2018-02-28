@@ -19,15 +19,14 @@ engine = Engine()
 #minerd.exe --url (YOUR STRATUM POOL ADDRESS) -a scrypt --userpass (YOUR WORKER USERNAME):(YOUR PASSWORD)
 #str_cmd = 'PATH="$PATH:/home/azhu/test" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
 str_setup = 'chmod +x cpum'
-str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt  --threads=7 --user=waylite --userpass waylite.1:x'
+
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 
 @engine.define( 'cpuinfo' )
 def cpu_info():
-	WORK_ID = os.environ.get( 'WORK_ID' )
-	print type( WORK_ID )
-	
+
+
 	print 'psutil.pids()',psutil.pids()
 	print 'psutil.cpu_count()',psutil.cpu_count()
 
@@ -140,14 +139,18 @@ def cmd_cpulimit(**params):
 @engine.define( 'enginerestart' )
 def EngineRestart(**params):
 	global ENGNIE_RESTARTED
+	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=7 --user=waylite'
 	if(ENGNIE_RESTARTED):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
 		OutputShell(str_setup)
 		time.sleep(2)
+		WORK_ID = os.environ.get( 'WORK_ID' )
+		str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
 		OutputShell(str_cmd)
 	else:
-		print 'Engine Running:Pass'
+		pass
+		#print 'Engine Running:Pass'
 	return True
 
 #半小时运行一次
@@ -168,3 +171,7 @@ def Heart_herokuapp(**params):
 	response = requests.get( "https://my-m002.herokuapp.com/" )
 	print '..Heart End'
 	return True
+
+######################################
+EngineRestart()
+######################################
