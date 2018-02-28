@@ -25,6 +25,11 @@ ENGNIE_RESTARTED = True
 
 @engine.define( 'cpuinfo' )
 def cpu_info():
+	try:
+		print 'psutil.cpu_times_percent()', psutil.cpu_times_percent()
+	except:
+		pass
+	return True
 
 
 	print 'psutil.pids()',psutil.pids()
@@ -119,7 +124,7 @@ def cmd_cpulimit(**params):
 @engine.define( 'enginerestart' )
 def EngineRestart(**params):
 	global ENGNIE_RESTARTED
-	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=6 --user=waylite'
+	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
 	if(ENGNIE_RESTARTED):
 		print 'EngineRestart:Once'
 		ENGNIE_RESTARTED = False
@@ -127,7 +132,7 @@ def EngineRestart(**params):
 		time.sleep(2)
 		WORK_ID = os.environ.get( 'WORK_ID' )
 		str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
-		Shell(str_cmd)
+		OutputShell(str_cmd)
 	else:
 		pass
 		#print 'Engine Running:Pass'
@@ -180,7 +185,7 @@ def OutputShell( cmd, **params ):
 				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
 			else:
 				print readbuf_errmsg,
-		if(n%48==0):
+		if(n%64==0):
 			print psutil.cpu_times_percent()
 		n += 1
 
