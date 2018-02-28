@@ -166,6 +166,10 @@ def Heart(**params):
 	url = "http://mlite0" + WORK_ID + ".leanapp.cn/heart"
 	response = requests.get( url )
 	print url,'..Heart End'
+	print 'Heart of herokuapp',
+	response = requests.get( "https://my-m001.herokuapp.com/" )
+	response = requests.get( "https://my-m002.herokuapp.com/" )
+	print '..Heart End'
 	return True
 
 #半小时运行一次
