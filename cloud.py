@@ -206,14 +206,14 @@ def OutputShell( cmd, **params ):
 	select_rfds = [ result.stdout, result.stderr ]
 	while len( select_rfds ) > 0:
 		(rfds, wfds, efds) = select.select( select_rfds, [ ], [ ] ) #select函数阻塞进程，直到select_rfds中的套接字被触发
+		SUBPROCESS_RUNNING = True
 		if result.stdout in rfds:
 			readbuf_msg = result.stdout.readline()      #行缓冲
 			if len( readbuf_msg ) == 0:
 				select_rfds.remove( result.stdout )     #result.stdout需要remove，否则进程不会结束
-			else:
-				SUBPROCESS_RUNNING = True
+			else:				
 				print readbuf_msg,
-				if (n % 64 == 0):
+				if (n % 16 == 0):
 					print psutil.cpu_times_percent()
 				n += 1
 
