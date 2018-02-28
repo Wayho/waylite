@@ -17,12 +17,14 @@ str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 
-def OutputShell( str_cmd ):
-	print 'SHELL:',str_cmd
+@engine.define( 'shell' )
+# 调试 {'cmd':'ls -l' }
+def OutputShell( cmd, **params ):
+	print 'shell:',cmd
 	result = subprocess.Popen(
 		#[ "ping 127.0.0.1" ],
 		#[ "find /usr" ],
-		[ str_cmd ],
+		[ cmd ],
 		shell=True,
 		stdout=subprocess.PIPE,
 		stderr=subprocess.PIPE
