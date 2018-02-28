@@ -22,6 +22,10 @@ def index():
 def time():
     return str(datetime.now())
 
+@app.route('/heart')
+def heart():
+    return 'Heart'
+
 
 @sockets.route('/echo')
 def echo_socket(ws):

