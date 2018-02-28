@@ -91,7 +91,7 @@ def OutputShell( cmd, **params ):
 				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
 			else:
 				print readbuf_errmsg,
-		if(n%8==0):
+		if(n%64==0):
 			print psutil.cpu_times_percent()
 		n += 1
 
