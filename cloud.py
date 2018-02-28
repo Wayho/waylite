@@ -151,7 +151,7 @@ def EngineRestart(**params):
 		OutputShell(str_cmd)
 	else:
 		pass
-		print 'Engine Running:Pass'
+		#print 'Engine Running:Pass'
 	return True
 
 #半小时运行一次
