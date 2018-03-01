@@ -77,7 +77,7 @@ def EngineLoop(**params):
 	global NUM_ENGINE_LOOP
 	global NUM_SUBPROCESS_LOOP
 
-	if (NUM_ENGINE_LOOP % 30 == 29):  # 29 Loop唤醒自身
+	if (NUM_ENGINE_LOOP % 10 == 9):  # 29 Loop唤醒自身
 		SUBPROCESS_RUNNING = False
 		Heart()
 
