@@ -90,11 +90,11 @@ def EngineLoop(**params):
 			NUM_SUBPROCESS_LOOP = 0
 			print 'R',
 		else:
-			if (NUM_SUBPROCESS_LOOP < 6):
+			if (NUM_SUBPROCESS_LOOP < 7):
 				print 'SUBPROCESS not in run',NUM_SUBPROCESS_LOOP
 				NUM_SUBPROCESS_LOOP += 1
 			else:
-				NUM_SUBPROCESS_LOOP = 0     # 6Loop内无消息，认为进程结束了
+				NUM_SUBPROCESS_LOOP = 0     # 7Loop内无消息，认为进程结束了
 				Mine()
 	NUM_ENGINE_LOOP += 1
 	return True
@@ -135,7 +135,7 @@ def cmd_cpulimit(**params):
 @engine.define( 'heart' )
 def Heart(**params):
 	WORK_ID = os.environ.get( 'WORK_ID' )
-	url = "http://mlite0" + WORK_ID + ".leanapp.cn/heart"
+	url = "http://mlite" + WORK_ID + ".leanapp.cn/heart"
 	response = requests.get( url )
 	print url,'..Heart End'
 	print 'Heart of herokuapp',
