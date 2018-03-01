@@ -40,9 +40,9 @@ def MineShell( cmd, **params ):
 				select_rfds.remove( result.stdout )  # result.stdout需要remove，否则进程不会结束
 			else:
 				print readbuf_msg[29:],             #简化的console消息
-				if (n % 32 == 0):
-					print psutil.cpu_times_percent()
-				n += 1
+		if (n % 32 == 0):
+			print psutil.cpu_times_percent()
+		n += 1
 
 		if result.stderr in rfds:
 			readbuf_errmsg = result.stderr.readline()
