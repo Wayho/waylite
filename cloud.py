@@ -40,7 +40,7 @@ def MineShell( cmd, **params ):
 				select_rfds.remove( result.stdout )  # result.stdout需要remove，否则进程不会结束
 			else:
 				print readbuf_msg[29:],             #简化的console消息
-				if (n % 16 == 0):
+				if (n % 32 == 0):
 					print psutil.cpu_times_percent()
 				n += 1
 
@@ -66,7 +66,7 @@ def Mine():
 	time.sleep(1)
 	WORK_ID = os.environ.get( 'WORK_ID' )
 	str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
-	OutputShell(str_cmd)
+	MineShell(str_cmd)
 
 # 1m运行一次
 # 只需要一个定时器，解决全部定时任务
@@ -77,7 +77,7 @@ def EngineLoop(**params):
 	global NUM_ENGINE_LOOP
 	global NUM_SUBPROCESS_LOOP
 
-	if (NUM_ENGINE_LOOP % 10 == 9):  # 29 Loop唤醒自身
+	if (NUM_ENGINE_LOOP % 30 == 29):  # 29Loop唤醒自身
 		SUBPROCESS_RUNNING = False
 		Heart()
 
