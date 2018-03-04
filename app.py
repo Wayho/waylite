@@ -3,19 +3,15 @@
 from datetime import datetime
 
 from flask import Flask
-from flask import render_template
+#from flask import url_for,render_template
 from flask_sockets import Sockets
-
-
 
 app = Flask(__name__)
 sockets = Sockets(app)
 
-
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return 'index'
 
 
 @app.route('/time')
