@@ -22,18 +22,6 @@ SUBPROCESS_RUNNING = False      #MineShell中进程有消息，就设为True, �
 NUM_ENGINE_LOOP = 0             #EngineLoop运行次数，用于决定是否唤醒自身
 NUM_SUBPROCESS_LOOP = 0         #SUBPROCESS_RUNNING = False时的运行次数，用于决定是否重启Mine
 
-def Get_Cmd_Mine(cmd_mine):
-	APP_ROOT = os.getcwd()
-	print APP_ROOT
-	STR_CMD_MINE = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && '
-	str_setup = 'chmod +x cpum'
-	#str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
-	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-	#str_cmd = 'PATH="$PATH:/media/azhu/sda6/LeanCloud/Wayho_Lean/mlite01" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-
-	print 'Mine:Once'
-	OutputShell(str_setup)
-
 def MineShell( cmd, **params ):
 	global SUBPROCESS_RUNNING
 	print 'shell:', cmd
@@ -92,7 +80,7 @@ def Mine_cpuminer_Monero():
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
 	WORK_ID = os.environ.get( 'WORK_ID' )
-	str_cmd = STR_CMD_MINE + 'cpum -a cryptonight -o stratum+tcp://pool.supportxmr.com:3333 -u ' + WALLET_ADDRESS + '+256 -p worker'
+	str_cmd = STR_CMD_MINE + 'cpum -a cryptonight -o stratum+tcp://pool.supportxmr.com:3333 -u ' + WALLET_ADDRESS + '+1000 -p worker'
 	str_cmd += '.' + WORK_ID
 	MineShell(str_cmd)
 	
