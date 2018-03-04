@@ -9,23 +9,20 @@ import time
 import os   # 在云引擎 Python 环境中使用自定义的环境变量,WORK_ID=1
 import psutil
 
-from app import Get_Domain
-
 engine = Engine()
 
 APP_ROOT = os.getcwd()
 STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
-
 
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 SUBPROCESS_RUNNING = False      #MineShell中进程有消息，就设为True, 但定时置为False，以便查看进程是否运行
 NUM_ENGINE_LOOP = 0             #EngineLoop运行次数，用于决定是否唤醒自身
 NUM_SUBPROCESS_LOOP = 0         #SUBPROCESS_RUNNING = False时的运行次数，用于决定是否重启Mine
+APP_DOMAIN = os.environ.get('LEANCLOUD_APP_DOMAIN')     #domain和WORK_ID统一为一个标识符
 
 print 'APP_ROOT:',APP_ROOT
-
-
+print 'APP_DOMAIN:',APP_DOMAIN
 
 def MineShell( cmd, **params ):
 	global SUBPROCESS_RUNNING
@@ -72,9 +69,8 @@ def Mine_cpuminer_LiteCoin():
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
 	#WORK_ID = os.environ.get( 'WORK_ID' )
-	WORK_ID = Get_Domain()
 	str_cmd = STR_CMD_MINE + 'cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-	str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
+	str_cmd += ' --userpass waylite.' + APP_DOMAIN + ':x'
 	MineShell(str_cmd)
 	
 def Mine_cpuminer_Monero():
@@ -86,9 +82,8 @@ def Mine_cpuminer_Monero():
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
 	#WORK_ID = os.environ.get( 'WORK_ID' )
-	WORK_ID = Get_Domain()
 	str_cmd = STR_CMD_MINE + 'cpum -a cryptonight -o stratum+tcp://pool.supportxmr.com:3333 -u ' + WALLET_ADDRESS + '+1000 -p worker'
-	str_cmd += '.' + WORK_ID
+	str_cmd += '.' + APP_DOMAIN
 	MineShell(str_cmd)
 	
 def Mine_xmr_stak_Monero():
