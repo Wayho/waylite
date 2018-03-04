@@ -11,13 +11,28 @@ import psutil
 
 engine = Engine()
 
-str_setup = 'chmod +x cpum'
+APP_ROOT = os.getcwd()
+print APP_ROOT
+STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
+
 
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 SUBPROCESS_RUNNING = False      #MineShell中进程有消息，就设为True, 但定时置为False，以便查看进程是否运行
 NUM_ENGINE_LOOP = 0             #EngineLoop运行次数，用于决定是否唤醒自身
 NUM_SUBPROCESS_LOOP = 0         #SUBPROCESS_RUNNING = False时的运行次数，用于决定是否重启Mine
+
+def Get_Cmd_Mine(cmd_mine):
+	APP_ROOT = os.getcwd()
+	print APP_ROOT
+	STR_CMD_MINE = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && '
+	str_setup = 'chmod +x cpum'
+	#str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
+	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
+	#str_cmd = 'PATH="$PATH:/media/azhu/sda6/LeanCloud/Wayho_Lean/mlite01" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
+
+	print 'Mine:Once'
+	OutputShell(str_setup)
 
 def MineShell( cmd, **params ):
 	global SUBPROCESS_RUNNING
@@ -56,16 +71,41 @@ def MineShell( cmd, **params ):
 	return result.returncode
 
 
-def Mine():
-	#str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --threads=4 --user=waylite'
-	str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-	#str_cmd = 'PATH="$PATH:/media/azhu/sda6/LeanCloud/Wayho_Lean/mlite01" && echo $PATH && cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-
-	print 'Mine:Once'
-	OutputShell(str_setup)
+def Mine_cpuminer_LiteCoin():
+	# cpum is rename from minerd,
+	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
+	# cpuminer-multi::https://github.com/lucasjones/cpuminer-multi
+	print 'Mine_cpuminer_LiteCoin:Once'
+	OutputShell('chmod +x cpum')
 	time.sleep(1)
 	WORK_ID = os.environ.get( 'WORK_ID' )
+	str_cmd = STR_CMD_MINE + 'cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
 	str_cmd += ' --userpass waylite.' + WORK_ID + ':x'
+	MineShell(str_cmd)
+	
+def Mine_cpuminer_Monero():
+	# cpum is rename from minerd,
+	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
+	# cpuminer-multi::https://github.com/lucasjones/cpuminer-multi
+	WALLET_ADDRESS ='496oNrFu5WAGHw6by228ofjExonQarbNWcWk1aC7QLMKdPpCa2ZBBD9QPqndnWQJ6pTmqFhtr4XZZGJPbK632HkS14qAbNK'
+	print 'Mine_cpuminer_Monero:Once'
+	OutputShell('chmod +x cpum')
+	time.sleep(1)
+	WORK_ID = os.environ.get( 'WORK_ID' )
+	str_cmd = STR_CMD_MINE + 'cpum -a cryptonight -o stratum+tcp://pool.supportxmr.com:3333 -u ' + WALLET_ADDRESS + '+256 -p worker'
+	str_cmd += '.' + WORK_ID
+	MineShell(str_cmd)
+	
+def Mine_xmr_stak_Monero():
+	# cpum is rename from minerd,
+	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
+	# cpuminer-multi::https://github.com/lucasjones/cpuminer-multi
+	WALLET_ADDRESS ='496oNrFu5WAGHw6by228ofjExonQarbNWcWk1aC7QLMKdPpCa2ZBBD9QPqndnWQJ6pTmqFhtr4XZZGJPbK632HkS14qAbNK'
+	print 'Mine_cpuminer_Monero:Once'
+	OutputShell('chmod +x xmrstak')
+	time.sleep(1)
+	WORK_ID = os.environ.get( 'WORK_ID' )
+	str_cmd = STR_CMD_MINE + 'xmrstak'
 	MineShell(str_cmd)
 
 # 1m运行一次
@@ -83,7 +123,7 @@ def EngineLoop(**params):
 
 	if (ENGNIE_RESTARTED):
 		ENGNIE_RESTARTED = False
-		Mine()
+		Mine_cpuminer_Monero()
 	else:
 		# 检查进程过程中
 		if (SUBPROCESS_RUNNING):
@@ -95,7 +135,7 @@ def EngineLoop(**params):
 				NUM_SUBPROCESS_LOOP += 1
 			else:
 				NUM_SUBPROCESS_LOOP = 0     # 7Loop内无消息，认为进程结束了
-				Mine()
+				Mine_cpuminer_Monero()
 	NUM_ENGINE_LOOP += 1
 	return True
 
@@ -103,8 +143,7 @@ def EngineLoop(**params):
 # 15 5/15 9-23 * * ?
 @engine.define( 'setup' )
 def Setup(**params):
-	print str_setup
-	OutputShell(str_setup)
+	OutputShell('chmod +x cpum')
 	return True
 
 @engine.define( 'install' )
