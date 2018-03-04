@@ -12,9 +12,8 @@ import psutil
 engine = Engine()
 
 APP_ROOT = os.getcwd()
-print APP_ROOT
 STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
-
+print 'Please set WORK_ID and timer :18  * 0-23 * * ?'
 
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
