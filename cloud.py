@@ -9,7 +9,7 @@ import time
 import os   # 在云引擎 Python 环境中使用自定义的环境变量,WORK_ID=1
 import psutil
 
-from flask import url_for
+from app import Get_Domain
 
 engine = Engine()
 
@@ -25,15 +25,7 @@ NUM_SUBPROCESS_LOOP = 0         #SUBPROCESS_RUNNING = False时的运行次数，
 
 print 'APP_ROOT:',APP_ROOT
 
-################################################################
-def Get_Domain():
-	# 返回值可用与识别App
-	# #domain和WORK_ID统一为一个标识符
-    str_url =  url_for('index', _external=True)     #http://mlite101.leanapp.cn/
-    arr_split = str_url.split('/')[2]                  #['http:', '', 'mlite101.leanapp.cn', '']
-    Domain = arr_split.split('.')[0]                  #['mlite101', 'leanapp', 'cn']
-    return Domain
-################################################################
+
 
 def MineShell( cmd, **params ):
 	global SUBPROCESS_RUNNING
