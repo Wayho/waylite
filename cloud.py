@@ -23,6 +23,7 @@ APP_DOMAIN = os.environ.get('LEANCLOUD_APP_DOMAIN')     #domain和WORK_ID统一�
 
 print 'APP_ROOT:',APP_ROOT
 print 'APP_DOMAIN:',APP_DOMAIN
+print 'Please set domain and loop timer:18 * 0-23 * * ?'
 
 def MineShell( cmd, **params ):
 	global SUBPROCESS_RUNNING
