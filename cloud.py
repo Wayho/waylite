@@ -171,6 +171,7 @@ def Heart(**params):
 	print 'Heart of herokuapp',
 	response = requests.get( "https://my-m001.herokuapp.com/" )
 	response = requests.get( "https://my-m002.herokuapp.com/" )
+	response = requests.get( "https://my-m003.herokuapp.com/")
 	print '..Heart End'
 	return True
 
