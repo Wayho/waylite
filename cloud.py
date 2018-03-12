@@ -153,19 +153,11 @@ def cmd_sysinfo(**params):
 	OutputShell('cat /etc/issue && cat /proc/cpuinfo')
 	return True
 
-@engine.define( 'cpulimit' )
-def cmd_cpulimit(**params):
-	OutputShell('cpulimit -l 40')
-	return True
-
-
-
 #半小时运行一次
 # 15 5/15 9-23 * * ?
 @engine.define( 'heart' )
 def Heart(**params):
-	WORK_ID = os.environ.get( 'WORK_ID' )
-	url = "http://mlite" + WORK_ID + ".leanapp.cn/heart"
+	url = "http://" + APP_DOMAIN + ".leanapp.cn/heart"
 	response = requests.get( url )
 	print url,'..Heart End'
 	print 'Heart of herokuapp',
