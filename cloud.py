@@ -53,8 +53,8 @@ engine = Engine()
 
 
 APP_ROOT = os.getcwd()
-#STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
-STR_CMD_MINE = 'PATH="$PATH:/home/leanengine/app:/home/leanengine/app/lib" && echo $PATH && '
+STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
+#STR_CMD_MINE = 'PATH="$PATH:/home/leanengine/app:/home/leanengine/app/lib" && echo $PATH && '
 
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
@@ -202,11 +202,6 @@ def Heart(**params):
 	url = "http://" + APP_DOMAIN + ".leanapp.cn/heart"
 	response = requests.get( url )
 	print url,'..Heart End'
-	print 'Heart of herokuapp',
-	response = requests.get( "https://my-m001.herokuapp.com/" )
-	response = requests.get( "https://my-m002.herokuapp.com/" )
-	response = requests.get( "https://my-m003.herokuapp.com/")
-	print '..Heart End'
 	return True
 
 @engine.define( 'shell' )
