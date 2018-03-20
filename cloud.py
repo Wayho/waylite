@@ -11,8 +11,50 @@ import psutil
 
 engine = Engine()
 
+#{'cmd':' cat /proc/version '}
+#Linux version 3.13.0-123-generic (buildd@lcy01-10) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3) ) #172-Ubuntu SMP Mon Jun 26 18:04:35 UTC 2017
+
+#{'cmd':'grep "model name" /proc/cpuinfo'}
+#model name : Common KVM CPU            #共7行
+#model name	: Intel(R) Core(TM) i5 CPU         650  @ 3.20GHz
+
+#{'cmd':'uname -a'}
+#Linux 0ee7d925a033 3.13.0-123-generic #172-Ubuntu SMP Mon Jun 26 18:04:35 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+#Linux azhu 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+#{'cmd':'cat /proc/meminfo |grep -i hugepages'}
+#AnonHugePages:    192512 kB
+#HugePages_Total:       0
+#HugePages_Free:        0
+#HugePages_Rsvd:        0
+#HugePages_Surp:        0
+#Hugepagesize:       2048 kB
+
+#{'cmd':' cat /proc/cpuinfo '}
+#cpu MHz : 2593.748
+#flags : fpu de pse tsc msr pae mce cx8 apic mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx lm constant_tsc nopl pni cx16 sse4_1 sse4_2 x2apic popcnt aes avx hypervisor lahf_lm
+#{'cmd':' cat /proc/softirqs '}
+#{'cmd':' cat /proc/stat '}
+
+#{'cmd':' cat /proc/cmdline '}
+#BOOT_IMAGE=/boot/vmlinuz-4.4.0-72-generic root=/dev/vda1 ro video=800x600 cgroup_enable=memory swapaccount=1 console=ttyS0,115200n8
+#BOOT_IMAGE=/boot/vmlinuz-4.13.0-36-generic root=UUID=a60681aa-fed1-496a-a211-fc83a4ce3fe0 ro quiet splash vt.handoff=7
+
+#{'cmd':' cat /proc/interrupts '}
+
+#{'cmd':' cat /proc/modules '}
+
+#{'cmd':'cd cpuminer-multi  && ./autogen.sh'}
+#{'cmd':'file cpum'}
+#cpum: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=6886220435b0233c7e51d725fc29423f300c289a, not stripped
+
+
+
+
+
 APP_ROOT = os.getcwd()
-STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
+#STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
+STR_CMD_MINE = 'PATH="$PATH:/home/leanengine/app:/home/leanengine/app/lib" && echo $PATH && '
 
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
