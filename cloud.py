@@ -11,6 +11,18 @@ import psutil
 
 engine = Engine()
 
+#{'cmd':'top -b -n 1'}
+#  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+#    1 leaneng+  20   0     200      4      0 S   0.0  0.0   0:00.07 dumb-init
+#    9 leaneng+  20   0   17192   2168   1992 S   0.0  0.0   0:00.01 daemon
+#   10 leaneng+  20   0 1048716  41388  22956 S   0.0  0.1   0:00.42 npm
+#   26 leaneng+  20   0    4468    752    664 S   0.0  0.0   0:00.00 sh
+#   27 leaneng+  20   0  918632  44520  22960 S   0.0  0.1   0:01.32 node
+#   62 leaneng+  20   0   19760   2292   2032 R   0.0  0.0   0:00.00 top
+
+#{'cmd':'top -b -n 1 -H -i'}
+
+
 #{'cmd':' cat /proc/version '}
 #Linux version 3.13.0-123-generic (buildd@lcy01-10) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3) ) #172-Ubuntu SMP Mon Jun 26 18:04:35 UTC 2017
 
@@ -33,21 +45,66 @@ engine = Engine()
 #{'cmd':' cat /proc/cpuinfo '}
 #cpu MHz : 2593.748
 #flags : fpu de pse tsc msr pae mce cx8 apic mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx lm constant_tsc nopl pni cx16 sse4_1 sse4_2 x2apic popcnt aes avx hypervisor lahf_lm
-#{'cmd':' cat /proc/softirqs '}
-#{'cmd':' cat /proc/stat '}
+
+#{'cmd':'cat /proc/cgroups'}
+#subsys_name	hierarchy	num_cgroups	enabled
+#cpuset	5	195	1
+#cpu	12	722	1
+#cpuacct	12	722	1
+#memory	10	1968	1
+#devices	2	721	1
+#freezer	3	195	1
+#net_cls	7	195	1
+#perf_event	4	195	1
+#net_prio	7	195	1
+#hugetlb	11	195	1
+#pids	6	722	1
+#rdma	9	1	1
+
+#{'cmd':'cat /proc/interrupts'}
+
+#{'cmd':'cat /proc/softirqs'}
+#{'cmd':'cat /proc/stat'}
 
 #{'cmd':' cat /proc/cmdline '}
 #BOOT_IMAGE=/boot/vmlinuz-4.4.0-72-generic root=/dev/vda1 ro video=800x600 cgroup_enable=memory swapaccount=1 console=ttyS0,115200n8
 #BOOT_IMAGE=/boot/vmlinuz-4.13.0-36-generic root=UUID=a60681aa-fed1-496a-a211-fc83a4ce3fe0 ro quiet splash vt.handoff=7
 
-#{'cmd':' cat /proc/interrupts '}
+#{'cmd':'cat /proc/interrupts'}
 
-#{'cmd':' cat /proc/modules '}
+#{'cmd':'cat /proc/modules'}
 
-#{'cmd':'cd cpuminer-multi  && ./autogen.sh'}
-#{'cmd':'file cpum'}
-#cpum: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=6886220435b0233c7e51d725fc29423f300c289a, not stripped
+#{'cmd':'cat /proc/thread-self/limits'}
 
+#{'cmd':'ls /proc/23477/cwd'}
+
+#{'cmd':'ps -eLf'}
+#include thread
+#UID        PID  PPID   LWP  C NLWP STIME TTY          TIME CMD
+#leaneng+     9     1     9  0    1 14:56 ?        00:00:00 daemon -f -r -- npm start
+#leaneng+    10     9    10  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    11  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    13  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    14  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    15  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    22  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    23  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    24  0   10 14:56 ?        00:00:00 npm
+#leaneng+    10     9    25  0   10 14:56 ?        00:00:00 npm
+#leaneng+    26    10    26  0    1 14:56 ?        00:00:00 sh -c node server.js
+#leaneng+    27    26    27  0    6 14:56 ?        00:00:00 node server.js
+#leaneng+    27    26    28  0    6 14:56 ?        00:00:00 node server.js
+#leaneng+    27    26    29  0    6 14:56 ?        00:00:00 node server.js
+#leaneng+    27    26    30  0    6 14:56 ?        00:00:00 node server.js
+#leaneng+    27    26    31  0    6 14:56 ?        00:00:00 node server.js
+#leaneng+    39    27    39  0    1 15:04 ?        00:00:00 ps -eLf
+
+#{'cmd':'ps -eLf | grep cpum'}
+#XXX     23476 23470 23476  0    1 15:34 pts/20   00:00:00 /bin/sh -c PATH="$PATH:/home/azhu/Test_Prj/waylite" && echo $PATH && cpum --threads=1 --benchmark
+#XXX     23477 23476 23477  0    3 15:34 pts/20   00:00:00 cpum --threads=1 --benchmark
+#XXX     23477 23476 23478  0    3 15:34 pts/20   00:00:00 cpum --threads=1 --benchmark
+#XXX     23477 23476 23479 34    3 15:34 pts/20   00:09:59 cpum --threads=1 --benchmark
+#XXX     24758 15463 24758  0    1 16:03 pts/11   00:00:00 grep --color=auto cpum
 
 
 
@@ -111,7 +168,6 @@ def Mine_cpuminer_LiteCoin():
 	print 'Mine_cpuminer_LiteCoin:Once'
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
-	#WORK_ID = os.environ.get( 'WORK_ID' )
 	str_cmd = STR_CMD_MINE + 'cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
 	str_cmd += ' --userpass waylite.' + APP_DOMAIN + ':x'
 	MineShell(str_cmd)
@@ -124,9 +180,20 @@ def Mine_cpuminer_Monero():
 	print 'Mine_cpuminer_Monero:Once'
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
-	#WORK_ID = os.environ.get( 'WORK_ID' )
 	str_cmd = STR_CMD_MINE + 'cpum --threads=1 --algo=cryptonight --url=stratum+tcp://pool.supportxmr.com:3333 --user=' + WALLET_ADDRESS + '+1000 --pass=worker'
 	str_cmd += '.' + APP_DOMAIN
+	MineShell(str_cmd)
+
+def Mine_cpuminer_benchmark_T1():
+	OutputShell('chmod +x cpum')
+	time.sleep(1)
+	str_cmd = STR_CMD_MINE + 'cpum --threads=1 --benchmark'
+	MineShell(str_cmd)
+
+def Mine_cpuminer_benchmark_T3():
+	OutputShell('chmod +x cpum')
+	time.sleep(1)
+	str_cmd = STR_CMD_MINE + 'cpum --threads=3 --benchmark'
 	MineShell(str_cmd)
 	
 def Mine_xmr_stak_Monero():
@@ -137,7 +204,6 @@ def Mine_xmr_stak_Monero():
 	print 'Mine_cpuminer_Monero:Once'
 	OutputShell('chmod +x xmrstak')
 	time.sleep(1)
-	#WORK_ID = os.environ.get( 'WORK_ID' )
 	str_cmd = STR_CMD_MINE + 'xmrstak'
 	MineShell(str_cmd)
 
@@ -179,15 +245,15 @@ def Setup(**params):
 	OutputShell('chmod +x cpum')
 	return True
 
-@engine.define( 'install' )
-def cmd_install(**params):
-	OutputShell('apt-get install cpulimit')
-	OutputShell('sudo apt-get install cpulimit')
-	return True
 
 @engine.define( 'ls' )
 def ls_cmd(**params):
 	OutputShell('ls -l')
+	return True
+
+@engine.define( 'top' )
+def cmd_sysinfo(**params):
+	OutputShell('top -b -n 1 -H')
 	return True
 
 @engine.define( 'sysinfo' )
