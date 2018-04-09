@@ -252,12 +252,17 @@ def ls_cmd(**params):
 	return True
 
 @engine.define( 'top' )
-def cmd_sysinfo(**params):
+def cmd_top(**params):
 	OutputShell('top -b -n 1 -H')
 	return True
 
-@engine.define( 'sysinfo' )
-def cmd_sysinfo(**params):
+@engine.define( 'ps' )
+def cmd_ps(**params):
+	OutputShell('ps -eLf')
+	return True
+
+@engine.define( 'cpuinfo' )
+def cmd_cpuinfo(**params):
 	OutputShell('cat /etc/issue && cat /proc/cpuinfo')
 	return True
 
