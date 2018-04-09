@@ -240,14 +240,14 @@ def EngineLoop(**params):
 
 #上传运行一次
 # 15 5/15 9-23 * * ?
-@engine.define( 'setup' )
-def Setup(**params):
+@engine.define( 'chmod' )
+def cmd_chmod(**params):
 	OutputShell('chmod +x cpum')
 	return True
 
 
 @engine.define( 'ls' )
-def ls_cmd(**params):
+def cmd_ls(**params):
 	OutputShell('ls -l')
 	return True
 
@@ -355,3 +355,5 @@ def cpu_info():
 		print 'psutil.cpu_times().user', psutil.cpu_times().user
 	except:
 		pass
+	
+cmd_chmod()
