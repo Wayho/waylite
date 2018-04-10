@@ -184,16 +184,18 @@ def Mine_cpuminer_Monero():
 	str_cmd += '.' + APP_DOMAIN
 	MineShell(str_cmd)
 
+@engine.define( 'benchmark_t1' )
 def Mine_cpuminer_benchmark_T1():
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
 	str_cmd = STR_CMD_MINE + 'cpum --threads=1 --benchmark'
 	MineShell(str_cmd)
 
-def Mine_cpuminer_benchmark_T3():
+@engine.define( 'benchmark_t2' )
+def Mine_cpuminer_benchmark_T2():
 	OutputShell('chmod +x cpum')
 	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'cpum --threads=3 --benchmark'
+	str_cmd = STR_CMD_MINE + 'cpum --threads=2 --benchmark'
 	MineShell(str_cmd)
 	
 def Mine_xmr_stak_Monero():
