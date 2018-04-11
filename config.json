@@ -13,9 +13,9 @@
     "workers": true,
     "pools": [
         {
-            "url": "127.0.0.1:3333",
+            "url": "pool.supportxmr.com:3333",
             "user": "48edfHu7V9Z84YzzMa6fUueoELZ9ZRXq9VetWzYGzKt52XU5xvqgzYnDK9URnRoJMk1j8nLwEVsaSWJ4fhdUyZijBGUicoD",
-            "pass": "xmr"
+            "pass": "xmrproxy"
         }
     ],
     "bind": [
