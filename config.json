@@ -1,0 +1,29 @@
+{
+    "background": false,
+    "log-file": null,
+    "access-log-file": null,
+    "retries": 5,
+    "retry-pause": 5,
+    "donate-level": 2,
+    "coin": "xmr",
+    "custom-diff": 0,
+    "syslog": false,
+    "verbose": false,
+    "colors": false,
+    "workers": true,
+    "pools": [
+        {
+            "url": "pool.supportxmr.com:3333",
+            "user": "48edfHu7V9Z84YzzMa6fUueoELZ9ZRXq9VetWzYGzKt52XU5xvqgzYnDK9URnRoJMk1j8nLwEVsaSWJ4fhdUyZijBGUicoD",
+            "pass": "xmrproxy"
+        }
+    ],
+    "bind": [
+        "0.0.0.0:3333"
+    ],
+    "api": {
+        "port": 0,
+        "access-token": null,
+        "worker-id": null
+    }
+}
