@@ -116,6 +116,7 @@ STR_CMD_MINE = 'PATH="$PATH:' + APP_ROOT +'" && echo $PATH && '
 #str_cmd = 'PATH="$PATH:/home/leanengine/app" && echo $PATH && ls -l'
 ENGNIE_RESTARTED = True
 SUBPROCESS_RUNNING = False      #MineShell中进程有消息，就设为True, 但定时置为False，以便查看进程是否运行
+XMRSTAK_RUNNING = False
 NUM_ENGINE_LOOP = 0             #EngineLoop运行次数，用于决定是否唤醒自身
 NUM_SUBPROCESS_LOOP = 0         #SUBPROCESS_RUNNING = False时的运行次数，用于决定是否重启Mine
 APP_DOMAIN = os.environ.get('LEANCLOUD_APP_DOMAIN')     #domain和WORK_ID统一为一个标识符
@@ -172,6 +173,7 @@ def Mine_cpuminer_LiteCoin():
 	str_cmd += ' --userpass waylite.' + APP_DOMAIN + ':x'
 	MineShell(str_cmd)
 	
+	
 def Mine_cpuminer_Monero():
 	# cpum is rename from minerd,
 	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
@@ -197,17 +199,32 @@ def Mine_cpuminer_benchmark_T2():
 	time.sleep(1)
 	str_cmd = STR_CMD_MINE + 'cpum --threads=2 --benchmark'
 	MineShell(str_cmd)
-	
+
+@engine.define( 'xmrstak48' )
 def Mine_xmr_stak_Monero():
-	# cpum is rename from minerd,
-	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
-	# cpuminer-multi::https://github.com/lucasjones/cpuminer-multi
-	WALLET_ADDRESS ='496oNrFu5WAGHw6by228ofjExonQarbNWcWk1aC7QLMKdPpCa2ZBBD9QPqndnWQJ6pTmqFhtr4XZZGJPbK632HkS14qAbNK'
-	print 'Mine_cpuminer_Monero:Once'
-	OutputShell('chmod +x xmrstak')
+	global XMRSTAK_RUNNING
+	if(XMRSTAK_RUNNING):
+		print 'XMRSTAK_RUNNING'
+		return True
+	XMRSTAK_RUNNING = True
+	print 'Mine_xmr_stak_Monero:Once'
+	OutputShell('chmod +x xmrstak48')
 	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'xmrstak'
-	MineShell(str_cmd)
+	str_cmd = STR_CMD_MINE + 'xmrstak48'
+	return MineShell(str_cmd)
+
+@engine.define( 'xmrstak48a' )
+def Mine_xmr_stak_Monero():
+	global XMRSTAK_RUNNING
+	if(XMRSTAK_RUNNING):
+		print 'XMRSTAK_RUNNING'
+		return True
+	XMRSTAK_RUNNING = True
+	print 'Mine_xmr_stak_Monero:Once'
+	OutputShell('chmod +x xmrstak48a')
+	time.sleep(1)
+	str_cmd = STR_CMD_MINE + 'xmrstak48a'
+	return MineShell(str_cmd)
 
 # 1m运行一次
 # 只需要一个定时器，解决全部定时任务
