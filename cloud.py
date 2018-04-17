@@ -244,7 +244,10 @@ def EngineLoop(**params):
 # 15 5/15 9-23 * * ?
 @engine.define( 'chmod' )
 def cmd_chmod(**params):
-	OutputShell('chmod +x cpum')
+	OutputShell('chmod +x xmrstak48')
+	OutputShell('chmod +x xmrstak48a')
+	OutputShell('chmod +x xmrstak48b')
+	OutputShell('chmod +x xmrstak48c')
 	return True
 
 
