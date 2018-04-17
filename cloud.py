@@ -235,7 +235,7 @@ def Mine_cpuminer_benchmark_T2():
 	str_cmd = STR_CMD_MINE + 'cpum --threads=2 --benchmark'
 	MineShell(str_cmd)
 
-@engine.define( 'xmrstak48' )
+@engine.define( 'xmrstak40' )
 def Mine_xmr_stak_Monero():
 	global XMRSTAK_RUNNING
 	if(XMRSTAK_RUNNING):
@@ -243,22 +243,22 @@ def Mine_xmr_stak_Monero():
 		return True
 	XMRSTAK_RUNNING = True
 	print 'Mine_xmr_stak_Monero:Once'
-	OutputShell('chmod +x xmrstak48')
+	OutputShell('chmod +x xmrstak40')
 	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'xmrstak48'
+	str_cmd = './xmrstak40'
 	return MineShell(str_cmd)
 
-@engine.define( 'xmrstak48a' )
-def Mine_xmr_stak_Monero():
+@engine.define( 'xmrstak40s' )
+def Mine_xmr_stak_Monero40s():
 	global XMRSTAK_RUNNING
 	if(XMRSTAK_RUNNING):
 		print 'XMRSTAK_RUNNING'
 		return True
 	XMRSTAK_RUNNING = True
 	print 'Mine_xmr_stak_Monero:Once'
-	OutputShell('chmod +x xmrstak48a')
+	OutputShell('chmod +x xmrstak40s16')
 	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'xmrstak48a'
+	str_cmd = STR_CMD_MINE + 'xmrstak40s16'
 	return MineShell(str_cmd)
 
 # 1m运行一次
@@ -296,10 +296,8 @@ def EngineLoop(**params):
 # 15 5/15 9-23 * * ?
 @engine.define( 'chmod' )
 def cmd_chmod(**params):
-	OutputShell('chmod +x xmrstak48')
-	OutputShell('chmod +x xmrstak48a')
-	OutputShell('chmod +x xmrstak48b')
-	OutputShell('chmod +x xmrstak48c')
+	OutputShell('chmod +x xmrstak40')
+	OutputShell('chmod +x xmrstak40s16')
 	return True
 
 
