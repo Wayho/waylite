@@ -124,8 +124,43 @@ APP_DOMAIN = os.environ.get('LEANCLOUD_APP_DOMAIN')     #domain和WORK_ID统一�
 print 'APP_ROOT:',APP_ROOT
 print 'APP_DOMAIN:',APP_DOMAIN
 print 'Please set domain and loop timer:18 * 0-23 * * ?'
+print 'Once:18 7 9 * * ?'
 
 def MineShell( cmd, **params ):
+	global SUBPROCESS_RUNNING
+	print 'shell:',cmd
+	result = subprocess.Popen(
+		#[ "ping 127.0.0.1" ],
+		#[ "find /usr" ],
+		[ cmd ],
+		shell=True,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE
+	)
+	# read date from pipe
+	select_rfds = [ result.stdout, result.stderr ]
+	while len( select_rfds ) > 0:
+		(rfds, wfds, efds) = select.select( select_rfds, [ ], [ ] ) #select函数阻塞进程，直到select_rfds中的套接字被触发
+		SUBPROCESS_RUNNING = True
+		if result.stdout in rfds:
+			readbuf_msg = result.stdout.readline()      #行缓冲
+			if len( readbuf_msg ) == 0:
+				select_rfds.remove( result.stdout )     #result.stdout需要remove，否则进程不会结束
+			else:
+				print readbuf_msg,
+
+		if result.stderr in rfds:
+			readbuf_errmsg = result.stderr.readline()
+			if len( readbuf_errmsg ) == 0:
+				select_rfds.remove( result.stderr )     #result.stderr，否则进程不会结束
+			else:
+				print readbuf_errmsg,
+	result.wait() # 等待字进程结束( 等待shell命令结束 )
+	print result.returncode
+	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
+	return result.returncode
+
+def MineShellX( cmd, **params ):
 	global SUBPROCESS_RUNNING
 	print 'shell:', cmd
 	result = subprocess.Popen(
