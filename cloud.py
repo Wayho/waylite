@@ -235,7 +235,7 @@ def Mine_xmr_stak_Monero():
 	str_cmd = './xmrstak40'
 	return MineShell(str_cmd)
 
-@engine.define( 'xmrstak40s' )
+@engine.define( 'xmrstak33s' )
 def Mine_xmr_stak_Monero40s():
 	global XMRSTAK_RUNNING
 	if(XMRSTAK_RUNNING):
@@ -243,9 +243,9 @@ def Mine_xmr_stak_Monero40s():
 		return True
 	XMRSTAK_RUNNING = True
 	print 'Mine_xmr_stak_Monero:Once'
-	OutputShell('chmod +x xmrstak40s16')
+	OutputShell('chmod +x xmrstak33s16')
 	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'xmrstak40s16'
+	str_cmd = STR_CMD_MINE + 'xmrstak33s16'
 	return MineShell(str_cmd)
 
 @engine.define( 'xmrstak36s' )
@@ -296,8 +296,9 @@ def EngineLoop(**params):
 # 15 5/15 9-23 * * ?
 @engine.define( 'chmod' )
 def cmd_chmod(**params):
-	OutputShell('chmod +x xmrstak40')
-	OutputShell('chmod +x xmrstak40s16')
+	OutputShell('chmod +x xmrstak36s16')
+	OutputShell('chmod +x xmrstak33s16')
+	OutputShell('ls -l')
 	return True
 
 
