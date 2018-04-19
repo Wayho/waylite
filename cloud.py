@@ -122,7 +122,6 @@ def Mine_xmr_stak_Monero36s():
 def cmd_chmod(**params):
 	OutputShell('chmod +x xmrstak')
 	OutputShell('chmod +x xmrstak36s16')
-	OutputShell('chmod +x xmrstak33s16')
 	OutputShell('ls -l')
 	time.sleep(8)
 	return True
