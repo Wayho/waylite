@@ -104,16 +104,16 @@ def Mine_xmr_stak_Monero():
 	str_cmd = './xmrstak'
 	return MineShell(str_cmd)
 
-@engine.define( 'xmrstak33s' )
-def Mine_xmr_stak_Monero33s():
+@engine.define( 'xmrstak36s' )
+def Mine_xmr_stak_Monero36s():
 	global XMRSTAK_RUNNING
 	if(XMRSTAK_RUNNING):
 		print 'XMRSTAK_RUNNING'
 		return True
 	XMRSTAK_RUNNING = True
-	print 'Mine_xmr_stak_Monero:xmrstak33s16'
+	print 'Mine_xmr_stak_Monero:xmrstak36s16'
 	time.sleep(random.randint(20, 50))
-	str_cmd = STR_CMD_MINE + 'xmrstak33s16'
+	str_cmd = STR_CMD_MINE + 'xmrstak36s16'
 	return MineShell(str_cmd)
 
 #上传运行一次
