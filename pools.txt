@@ -1,6 +1,6 @@
 "pool_list" :
 [
-	{"pool_address" : "pool.supportxmr.com:3333", "wallet_address" : "496oNrFu5WAGHw6by228ofjExonQarbNWcWk1aC7QLMKdPpCa2ZBBD9QPqndnWQJ6pTmqFhtr4XZZGJPbK632HkS14qAbNK", "rig_id" : "", "pool_password" : "dcm3048", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
+	{"pool_address" : "pool.supportxmr.com:3333", "wallet_address" : "496oNrFu5WAGHw6by228ofjExonQarbNWcWk1aC7QLMKdPpCa2ZBBD9QPqndnWQJ6pTmqFhtr4XZZGJPbK632HkS14qAbNK", "rig_id" : "", "pool_password" : "WORKER_ID", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 "currency" : "monero7",
 
