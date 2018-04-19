@@ -169,7 +169,7 @@ def Mine_xmr_stak_Monero():
 		return True
 	XMRSTAK_RUNNING = True
 	print 'Mine_xmr_stak_Monero:xmrstak'
-	cmd_chmod()
+	time.sleep(random.randint(20, 50))
 	str_cmd = './xmrstak'
 	return MineShell(str_cmd)
 
@@ -181,20 +181,8 @@ def Mine_xmr_stak_Monero33s():
 		return True
 	XMRSTAK_RUNNING = True
 	print 'Mine_xmr_stak_Monero:xmrstak33s16'
-	cmd_chmod()
+	time.sleep(random.randint(20, 50))
 	str_cmd = STR_CMD_MINE + 'xmrstak33s16'
-	return MineShell(str_cmd)
-
-@engine.define( 'xmrstak36s' )
-def Mine_xmr_stak_Monero36s():
-	global XMRSTAK_RUNNING
-	if(XMRSTAK_RUNNING):
-		print 'XMRSTAK_RUNNING'
-		return True
-	XMRSTAK_RUNNING = True
-	print 'Mine_xmr_stak_Monero:xmrstak36s16'
-	cmd_chmod()
-	str_cmd = './xmrstak36s16'
 	return MineShell(str_cmd)
 
 
@@ -207,7 +195,7 @@ def cmd_chmod(**params):
 	OutputShell('chmod +x xmrstak36s16')
 	OutputShell('chmod +x xmrstak33s16')
 	OutputShell('ls -l')
-	time.sleep(random.randint(20, 60))
+	time.sleep(8)
 	return True
 
 
@@ -306,3 +294,5 @@ def EngineLoop(**params):
 				Mine_cpuminer_Monero()
 	NUM_ENGINE_LOOP += 1
 	return True
+
+cmd_chmod()
