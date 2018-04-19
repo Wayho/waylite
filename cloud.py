@@ -143,6 +143,11 @@ def cmd_ps(**params):
 	OutputShell('ps -eLf')
 	return True
 
+@engine.define( 'pools' )
+def cmd_cat_pools(**params):
+	OutputShell('cat pools.txt')
+	return True
+
 @engine.define( 'cpuinfo' )
 def cmd_cpuinfo(**params):
 	OutputShell('cat /etc/issue && cat /proc/cpuinfo')
@@ -225,8 +230,9 @@ def EngineLoop(**params):
 	return True
 
 ################################################
-cmd_chmod()
 Config_pools_File(APP_DOMAIN)
+OutputShell('cat pools.txt')
+cmd_chmod()
 ################################################
 #{'cmd':'top -b -n 1'}
 #  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
