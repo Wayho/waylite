@@ -134,7 +134,7 @@ def cmd_ls():
 	return True
 
 @engine.define( 'top' )
-def cmd_top(*):
+def cmd_top():
 	OutputShell('top -b -n 1 -H')
 	return True
 
