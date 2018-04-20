@@ -45,16 +45,17 @@ def Load_From_File(filename):
 	return text
 
 def Config_pools_File(app_domain):
-	if(app_domain is None or ''==app_domain):
+	if(app_domain is None or 0==len(app_domain)):
 		print 'APP_DOMAIN is None!'
 		app_domain = 'NoID'
 	text = Load_From_File(STR_POOLS_FILENAME)
 	idx_WORKER_ID = text.find('WORKER_ID')
 	if(-1!=idx_WORKER_ID):
-		text = text.replace('WORKER_ID', app_domain[0:6])
+		time.sleep(2)
+		text = text.replace('WORKER_ID', app_domain[0:7])
 		Save_To_File(STR_POOLS_FILENAME, text)
 	else:
-		print 'WORKER_ID not find!'
+		print 'WORKER_ID not find, or has been seted.'
 
 ###############################################
 
@@ -120,10 +121,10 @@ def Mine_xmr_stak_Monero36s():
 # 15 5/15 9-23 * * ?
 @engine.define( 'chmod' )
 def cmd_chmod(**params):
+	time.sleep(8)
 	OutputShell('chmod +x xmrstak')
 	OutputShell('chmod +x xmrstak36s16')
-	OutputShell('ls -l')
-	time.sleep(8)
+	OutputShell('ls -l')	
 	return True
 
 
@@ -230,6 +231,7 @@ def EngineLoop(**params):
 
 ################################################
 Config_pools_File(APP_DOMAIN)
+time.sleep(2)
 OutputShell('cat pools.txt')
 cmd_chmod()
 ################################################
