@@ -129,27 +129,27 @@ def cmd_chmod(**params):
 
 
 @engine.define( 'ls' )
-def cmd_ls(**params):
+def cmd_ls():
 	OutputShell('ls -l')
 	return True
 
 @engine.define( 'top' )
-def cmd_top(**params):
+def cmd_top(*):
 	OutputShell('top -b -n 1 -H')
 	return True
 
 @engine.define( 'ps' )
-def cmd_ps(**params):
+def cmd_ps():
 	OutputShell('ps -eLf')
 	return True
 
 @engine.define( 'pools' )
-def cmd_cat_pools(**params):
+def cmd_cat_pools():
 	OutputShell('cat pools.txt')
 	return True
 
 @engine.define( 'cpuinfo' )
-def cmd_cpuinfo(**params):
+def cmd_cpuinfo():
 	OutputShell('cat /etc/issue && cat /proc/cpuinfo')
 	return True
 
