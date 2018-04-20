@@ -324,8 +324,4 @@ cmd_chmod()
 #leaneng+    39    27    39  0    1 15:04 ?        00:00:00 ps -eLf
 
 #{'cmd':'ps -eLf | grep cpum'}
-#XXX     23476 23470 23476  0    1 15:34 pts/20   00:00:00 /bin/sh -c PATH="$PATH:/home/azhu/Test_Prj/waylite" && echo $PATH && cpum --threads=1 --benchmark
-#XXX     23477 23476 23477  0    3 15:34 pts/20   00:00:00 cpum --threads=1 --benchmark
-#XXX     23477 23476 23478  0    3 15:34 pts/20   00:00:00 cpum --threads=1 --benchmark
-#XXX     23477 23476 23479 34    3 15:34 pts/20   00:09:59 cpum --threads=1 --benchmark
-#XXX     24758 15463 24758  0    1 16:03 pts/11   00:00:00 grep --color=auto cpum
+
