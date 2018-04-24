@@ -34,4 +34,4 @@ A proof of concept of web mining using CoinHive's JavaScript Mining library. The
 
 ## VPS Miner（dev分支）
 
-用在LeanCloud中的一个样例，已限速，但是 LeanCloud 是不允许挖的，留个纪念
+用在LeanCloud中的一个样例，使用XMR-Stak CPU版，已限速，但是 LeanCloud 是不允许挖的，留个纪念
