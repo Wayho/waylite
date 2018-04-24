@@ -1,64 +1,31 @@
-# Flask-getting-started
+# MoneroMiner
 
-一个简单的使用 Flask 的 Python 应用。
-可以运行在 LeanEngine Python 运行时环境。
+## deepMiner(https://github.com/deepwn/deepMiner)
 
-## 本地运行
+用于转化WebSocket流量与PoolSocket(TCP)流量的中间件
 
-首先确认本机已经安装 [Python](http://python.org/) 运行环境。然后执行下列指令：
+参见：
 
-## 一键部署
-[![Deploy to LeanEngine](http://ac-32vx10b9.clouddn.com/109bd02ee9f5875a.png)](https://leancloud.cn/1.1/functions/_ops/deploy-button)
+Coinhive挖矿脚本分析与Pool改造自建(一) (http://www.freebuf.com/column/151316.html)
 
-## 本地运行
+Coinhive挖矿脚本分析与Pool改造自建(二) (http://www.freebuf.com/column/151376.html)
 
-首先确认本机已经安装 [Python](http://python.org/) 运行环境和 [LeanCloud 命令行工具](https://www.leancloud.cn/docs/leanengine_cli.html)，然后执行下列指令：
+## xmr-proxy(https://github.com/Atrides/xmr-proxy)
 
-```
-$ git clone git@github.com:leancloud/python-getting-started.git
-$ cd python-getting-started
-```
+Stratum Proxy for Monero-pools (RPCv2) using asynchronous networking written in Python Twisted.
 
-### 安装依赖：
+## xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy/blob/master/proxy.js)
 
-```
-pip install -r requirements.txt
-```
+Stratum Proxy for Monero-pools written in Node.js.
 
-### 关联应用：
+## Node Open Mining Portal(https://github.com/zone117x/node-open-mining-portal)
 
-```
-lean app add origin <appId>
-```
+This portal is an extremely efficient, highly scalable, all-in-one, easy to setup cryptocurrency mining pool written entirely in Node.js. 
 
-这里的 appId 填上你在 LeanCloud 上创建的某一应用的 appId 即可。origin 则有点像 Git 里的 remote 名称。
+## CoinHive Stratum Mining Proxy(https://github.com/x25/coinhive-stratum-mining-proxy)
 
-### 启动项目：
+A proof of concept of web mining using CoinHive's JavaScript Mining library. The proxy acts like coin hive to connect to a mining pool. Should work with any monero pool based on the Stratum Mining Protocol. 
 
-```
-lean up
-```
+## XMR-Stak(https://github.com/fireice-uk/xmr-stak)
 
-应用即可启动运行：[localhost:3000](http://localhost:3000)
-
-## 部署到 LeanEngine
-
-部署到预备环境（若无预备环境则直接部署到生产环境）：
-```
-lean deploy
-```
-
-将预备环境的代码发布到生产环境：
-```
-lean publish
-```
-
-## 相关文档
-
-* [LeanEngine 指南](https://leancloud.cn/docs/leanengine_guide.html)
-* [Python SDK 指南](https://leancloud.cn/docs/python_guide.html)
-* [Python SDK API](https://leancloud.cn/docs/api/python/index.html)
-* [命令行工具详解](https://leancloud.cn/docs/cloud_code_commandline.html)
-* [LeanEngine FAQ](https://leancloud.cn/docs/cloud_code_faq.html)
-# waylite
-# waylite
+优化过的Cpu/GPU Miner
