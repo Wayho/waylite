@@ -1,8 +1,36 @@
-# XMR-Stak(https://github.com/fireice-uk/xmr-stak)
+# MoneroMiner
+
+## deepMiner(https://github.com/deepwn/deepMiner)
+
+用于转化WebSocket流量与PoolSocket(TCP)流量的中间件
+
+参见：
+
+Coinhive挖矿脚本分析与Pool改造自建(一) (http://www.freebuf.com/column/151316.html)
+
+Coinhive挖矿脚本分析与Pool改造自建(二) (http://www.freebuf.com/column/151376.html)
+
+## xmr-proxy(https://github.com/Atrides/xmr-proxy)
+
+Stratum Proxy for Monero-pools (RPCv2) using asynchronous networking written in Python Twisted.
+
+## xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy/blob/master/proxy.js)
+
+Stratum Proxy for Monero-pools written in Node.js.
+
+## Node Open Mining Portal(https://github.com/zone117x/node-open-mining-portal)
+
+This portal is an extremely efficient, highly scalable, all-in-one, easy to setup cryptocurrency mining pool written entirely in Node.js. 
+
+## CoinHive Stratum Mining Proxy(https://github.com/x25/coinhive-stratum-mining-proxy)
+
+A proof of concept of web mining using CoinHive's JavaScript Mining library. The proxy acts like coin hive to connect to a mining pool. Should work with any monero pool based on the Stratum Mining Protocol. 
+
+## XMR-Stak(https://github.com/fireice-uk/xmr-stak)
 
 优化过的Cpu/GPU Miner
 
-## minethd.cpp:
+### minethd.cpp:
 
 void minethd::work_main()
 
@@ -20,7 +48,7 @@ void minethd::work_main()
       
 			std::this_thread::yield();
       
-## executor.cpp:
+### executor.cpp:
 
 void executor::eval_pool_choice()
 
@@ -29,32 +57,3 @@ void executor::eval_pool_choice()
   //不要donate
   
 	bool dev_time = false;
-
-# deepMiner(https://github.com/deepwn/deepMiner)
-
-用于转化WebSocket流量与PoolSocket(TCP)流量的中间件
-
-参见：
-
-Coinhive挖矿脚本分析与Pool改造自建(一) (http://www.freebuf.com/column/151316.html)
-
-Coinhive挖矿脚本分析与Pool改造自建(二) (http://www.freebuf.com/column/151376.html)
-
-# xmr-proxy(https://github.com/Atrides/xmr-proxy)
-
-Stratum Proxy for Monero-pools (RPCv2) using asynchronous networking written in Python Twisted.
-
-# xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy/blob/master/proxy.js)
-
-Stratum Proxy for Monero-pools written in Node.js.
-
-# Node Open Mining Portal(https://github.com/zone117x/node-open-mining-portal)
-
-This portal is an extremely efficient, highly scalable, all-in-one, easy to setup cryptocurrency mining pool written entirely in Node.js. 
-
-# CoinHive Stratum Mining Proxy(https://github.com/x25/coinhive-stratum-mining-proxy)
-
-A proof of concept of web mining using CoinHive's JavaScript Mining library. The proxy acts like coin hive to connect to a mining pool. Should work with any monero pool based on the Stratum Mining Protocol. 
-
-# waylite
-# waylite
