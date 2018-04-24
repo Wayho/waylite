@@ -52,8 +52,8 @@ void minethd::work_main()
 
 void executor::eval_pool_choice()
 
-  //bool dev_time = is_dev_time();
+  	//bool dev_time = is_dev_time();
   
-  //不要donate
+  	//不要donate
   
 	bool dev_time = false;
