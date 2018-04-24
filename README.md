@@ -1,5 +1,7 @@
 # MoneroMiner
 
+统一在此给出有关Monero Miner的链接
+
 ## deepMiner(https://github.com/deepwn/deepMiner)
 
 用于转化WebSocket流量与PoolSocket(TCP)流量的中间件
@@ -29,3 +31,7 @@ A proof of concept of web mining using CoinHive's JavaScript Mining library. The
 ## XMR-Stak(https://github.com/fireice-uk/xmr-stak)
 
 优化过的Cpu/GPU Miner
+
+## VPS Miner（dev分支）
+
+用在LeanCloud中的一个样例，已限速，但是 LeanCloud 是不允许挖的，留个纪念
