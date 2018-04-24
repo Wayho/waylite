@@ -14,7 +14,7 @@ Coinhive挖矿脚本分析与Pool改造自建(二) (http://www.freebuf.com/colum
 
 Stratum Proxy for Monero-pools (RPCv2) using asynchronous networking written in Python Twisted.
 
-## xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy/blob/master/proxy.js)
+## xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy)
 
 Stratum Proxy for Monero-pools written in Node.js.
 
