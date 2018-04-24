@@ -32,6 +32,10 @@ A proof of concept of web mining using CoinHive's JavaScript Mining library. The
 
 优化过的Cpu/GPU Miner
 
-## VPS Miner（dev分支）
+## Python分支
 
-用在LeanCloud中的一个样例，使用XMR-Stak CPU版，已限速，但是 LeanCloud 是不允许挖的，留个纪念
+用在LeanCloud中的一个样例(Python)，使用XMR-Stak CPU版，已限速，但是 LeanCloud 是不允许挖的，留个纪念
+
+## NodeJS分支
+
+早期用在LeanCloud中的一个样例(Node)，使用Cpuminer
