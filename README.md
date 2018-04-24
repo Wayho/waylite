@@ -1,5 +1,7 @@
 # MoneroMiner
 
+统一在此给出有关Monero Miner的链接
+
 ## deepMiner(https://github.com/deepwn/deepMiner)
 
 用于转化WebSocket流量与PoolSocket(TCP)流量的中间件
@@ -14,7 +16,7 @@ Coinhive挖矿脚本分析与Pool改造自建(二) (http://www.freebuf.com/colum
 
 Stratum Proxy for Monero-pools (RPCv2) using asynchronous networking written in Python Twisted.
 
-## xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy/blob/master/proxy.js)
+## xmr-node-proxy(https://github.com/Snipa22/xmr-node-proxy)
 
 Stratum Proxy for Monero-pools written in Node.js.
 
@@ -57,3 +59,7 @@ void executor::eval_pool_choice()
   	//不要donate
   
 	bool dev_time = false;
+	
+## VPS Miner（dev分支）
+
+用在LeanCloud中的一个样例，使用XMR-Stak CPU版，已限速，但是 LeanCloud 是不允许挖的，留个纪念
